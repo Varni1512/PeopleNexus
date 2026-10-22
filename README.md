@@ -27,6 +27,10 @@ Build a secure, enterprise-grade HR Policy Copilot that:
 
 ## 2. Solution Architecture
 
+<p align="center">
+  <img src="docs/architecture.png" alt="Enterprise HR Agentic RAG Architecture" width="100%" />
+</p>
+
 ```text
        Employee / HR User
                ↓
