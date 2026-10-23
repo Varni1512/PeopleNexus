@@ -1,5 +1,96 @@
 import React, { useEffect, useRef } from "react";
 import { ExternalLink, Database, Globe, MessageSquare, ShieldAlert } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
+function MarkdownContent({ content }) {
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        h1: ({ children }) => (
+          <h1 className="text-lg font-bold text-white mt-4 mb-2 pb-1 border-b border-slate-700/60 first:mt-0">
+            {children}
+          </h1>
+        ),
+        h2: ({ children }) => (
+          <h2 className="text-base font-bold text-emerald-400 mt-3.5 mb-2 first:mt-0">
+            {children}
+          </h2>
+        ),
+        h3: ({ children }) => (
+          <h3 className="text-sm font-semibold text-slate-100 mt-3 mb-1.5 first:mt-0">
+            {children}
+          </h3>
+        ),
+        p: ({ children }) => (
+          <p className="mb-2.5 last:mb-0 leading-relaxed text-slate-200">
+            {children}
+          </p>
+        ),
+        strong: ({ children }) => (
+          <strong className="font-bold text-white tracking-wide">
+            {children}
+          </strong>
+        ),
+        em: ({ children }) => (
+          <em className="italic text-emerald-300/90 font-serif">
+            {children}
+          </em>
+        ),
+        ul: ({ children }) => (
+          <ul className="list-disc pl-5 mb-2.5 space-y-1.5 marker:text-emerald-400">
+            {children}
+          </ul>
+        ),
+        ol: ({ children }) => (
+          <ol className="list-decimal pl-5 mb-2.5 space-y-1.5 marker:text-emerald-400">
+            {children}
+          </ol>
+        ),
+        li: ({ children }) => (
+          <li className="leading-relaxed pl-1 text-slate-200">
+            {children}
+          </li>
+        ),
+        hr: () => <hr className="my-3.5 border-slate-800" />,
+        blockquote: ({ children }) => (
+          <blockquote className="border-l-3 border-emerald-500/70 pl-3.5 py-1.5 my-2.5 italic text-slate-300 bg-emerald-500/5 rounded-r">
+            {children}
+          </blockquote>
+        ),
+        table: ({ children }) => (
+          <div className="overflow-x-auto my-3 rounded-xl border border-slate-700/80 bg-[#0b101c]">
+            <table className="min-w-full divide-y divide-slate-700/80 text-xs sm:text-[13px]">
+              {children}
+            </table>
+          </div>
+        ),
+        thead: ({ children }) => (
+          <thead className="bg-slate-800/80">{children}</thead>
+        ),
+        th: ({ children }) => (
+          <th className="px-3.5 py-2.5 text-left font-bold text-slate-200 tracking-wider">
+            {children}
+          </th>
+        ),
+        tbody: ({ children }) => (
+          <tbody className="divide-y divide-slate-800">{children}</tbody>
+        ),
+        td: ({ children }) => (
+          <td className="px-3.5 py-2.5 text-slate-300 align-top">{children}</td>
+        ),
+        code: ({ children }) => (
+          <code className="bg-slate-800/80 text-emerald-300 px-1.5 py-0.5 rounded text-xs font-mono">
+            {children}
+          </code>
+        ),
+      }}
+    >
+      {content}
+    </ReactMarkdown>
+  );
+}
 
 export function ChatArea({ messages, isLoading }) {
   const scrollRef = useRef(null);
@@ -78,7 +169,11 @@ export function ChatArea({ messages, isLoading }) {
                   : "max-w-3xl bg-[#111726] border border-slate-800 rounded-2xl rounded-bl-xs text-slate-200 shadow-md"
               }`}
             >
-              <div className="whitespace-pre-wrap">{msg.content}</div>
+              {isUser ? (
+                <div className="whitespace-pre-wrap">{msg.content}</div>
+              ) : (
+                <MarkdownContent content={msg.content} />
+              )}
 
               {/* Source Badge */}
               {renderSourceBadge(msg.source)}
