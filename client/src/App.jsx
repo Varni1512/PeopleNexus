@@ -5,6 +5,7 @@ import { ChatArea } from "./components/ChatArea";
 import { Composer } from "./components/Composer";
 import { TracePanel } from "./components/TracePanel";
 import { UploadModal } from "./components/UploadModal";
+import { API_BASE } from "./api";
 
 export default function App() {
   const [messages, setMessages] = useState([
@@ -34,7 +35,7 @@ export default function App() {
     setActiveStep(1);
 
     try {
-      const res = await fetch("/api/chat", {
+      const res = await fetch(`${API_BASE}/api/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

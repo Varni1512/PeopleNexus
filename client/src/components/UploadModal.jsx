@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { UploadCloud, CheckCircle, AlertCircle, X } from "lucide-react";
+import { API_BASE } from "../api";
 
 export function UploadModal({ isOpen, onClose }) {
   const [adminKey, setAdminKey] = useState("");
@@ -23,7 +24,7 @@ export function UploadModal({ isOpen, onClose }) {
     formData.append("file", file);
 
     try {
-      const res = await fetch("/api/ingest", {
+      const res = await fetch(`${API_BASE}/api/ingest`, {
         method: "POST",
         headers: {
           "x-admin-key": adminKey || "change-me-in-production",
